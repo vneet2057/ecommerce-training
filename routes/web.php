@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/',[UserController::class,'index']);
+
+Route::get('/view-product/{id}',[UserController::class,'viewProduct']);
+
+
 
 Auth::routes();
 
@@ -40,3 +45,7 @@ Route::post('/add-product',[ProductController::class,'store']);
 Route::get('/edit-product/{id}',[ProductController::class,'edit']);
 Route::post('/update-product/{id}',[ProductController::class,'update']);
 Route::get('/delete-product/{id}',[ProductController::class,'destroy']);
+
+
+// add to cart 
+Route::post('/add-to-cart/{id}',[CartController::class,'addToCart']);
