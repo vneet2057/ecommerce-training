@@ -63,7 +63,7 @@
                 <td>
                     {{$product->product_name}}
                 </td>
-                <td>{{$product->category_id}}</td>
+                <td>{{$product->category['category_name']}}</td>
                 <td>{{$product->product_price}}</td>
                 <td>{{$product->product_desc}}</td>
                 <td><a href="/edit-product/{{$product->id}}" class="btn btn-primary">Edit</a>

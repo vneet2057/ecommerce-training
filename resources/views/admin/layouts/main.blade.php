@@ -41,9 +41,11 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                <a class="btn btn-outline-danger" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">Logout</a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
                 </form>
             </div>
         </div>
@@ -52,7 +54,7 @@
 
 
     <!-- main content -->
-        @yield('content')
+    @yield('content')
     <!-- main content ends -->
 
 
