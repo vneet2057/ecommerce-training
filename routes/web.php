@@ -49,3 +49,5 @@ Route::get('/delete-product/{id}',[ProductController::class,'destroy']);
 
 // add to cart 
 Route::post('/add-to-cart/{id}',[CartController::class,'addToCart']);
+// checkout
+Route::get('/checkout',[CartController::class,'checkout']);

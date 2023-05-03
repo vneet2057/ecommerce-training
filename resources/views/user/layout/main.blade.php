@@ -25,6 +25,13 @@
 
 <body>
 
+<?php
+
+use App\Models\Cart;
+
+$carts = Cart::where('user_id',auth()->user()->id)->get();
+
+?>
     <!--header area start-->
     <!--Offcanvas menu area start-->
     <div class="off_canvars_overlay">
@@ -193,50 +200,35 @@
                                     </div>
                                     <div class="mini_cart_wrapper">
                                         <a href="javascript:void(0)"><img src="{{asset('user/assets/img/shopping-bag.png')}}" alt=""></a>
-                                        <span class="cart_quantity">2</span>
+                                        <span class="cart_quantity">{{$carts->count()}}</span>
                                         <!--mini cart-->
                                          <div class="mini_cart">
+                                            <?php $total = 0 ;?>
+                                            @foreach($carts as $cart)
                                             <div class="cart_item">
                                                <div class="cart_img">
-                                                   <a href="#"><img src="assets/img/s-product/product.jpg" alt=""></a>
+                                                   <a href="#"><img src="{{asset($cart->product['product_image'])}}" alt=""></a>
                                                </div>
                                                 <div class="cart_info">
-                                                    <a href="#">Sit voluptatem rhoncus sem lectus</a>
-                                                    <p>Qty: 1 X <span> $60.00 </span></p>    
+                                                    <a href="#">{{$cart->product['product_name']}}</a>
+                                                    <p>Qty: {{$cart->quantity}} X <span>Rs {{$cart->unit_price}} </span></p>    
                                                 </div>
-                                                <div class="cart_remove">
-                                                    <a href="#"><i class="ion-android-close"></i></a>
-                                                </div>
+                                             
                                             </div>
-                                            <div class="cart_item">
-                                               <div class="cart_img">
-                                                   <a href="#"><img src="assets/img/s-product/product2.jpg" alt=""></a>
-                                               </div>
-                                                <div class="cart_info">
-                                                    <a href="#">Natus erro at congue massa commodo</a>
-                                                    <p>Qty: 1 X <span> $60.00 </span></p>   
-                                                </div>
-                                                <div class="cart_remove">
-                                                    <a href="#"><i class="ion-android-close"></i></a>
-                                                </div>
-                                            </div>
+                                            <?php $total = $total + ($cart->unit_price * $cart->quantity) ;?>
+                                            @endforeach
+                                        
                                             <div class="mini_cart_table">
-                                                <div class="cart_total">
-                                                    <span>Sub total:</span>
-                                                    <span class="price">$138.00</span>
-                                                </div>
+                                               
                                                 <div class="cart_total mt-10">
                                                     <span>total:</span>
-                                                    <span class="price">$138.00</span>
+                                                    <span class="price">Rs {{$total}}</span>
                                                 </div>
                                             </div>
 
                                             <div class="mini_cart_footer">
-                                               <div class="cart_button">
-                                                    <a href="cart.html">View cart</a>
-                                                </div>
                                                 <div class="cart_button">
-                                                    <a href="checkout.html">Checkout</a>
+                                                    <a href="/checkout">Checkout</a>
                                                 </div>
 
                                             </div>
@@ -259,7 +251,7 @@
                             <div class="main_menu menu_position"> 
                                 <nav>  
                                     <ul>
-                                        <li><a href="index-2.html">home</a></li>
+                                        <li><a href="/">home</a></li>
                                         <li><a href="product-details.html">Shop</a></li>
                                         <li><a href="contact.html"> Contact Us</a></li>
                                     </ul>  

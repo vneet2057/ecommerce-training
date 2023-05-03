@@ -29,4 +29,8 @@ class CartController extends Controller
             return redirect('/login');
         }
     }
+
+    public function checkout(){
+        return  view('user.checkout');
+    }
 }
