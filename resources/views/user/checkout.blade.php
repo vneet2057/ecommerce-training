@@ -4,17 +4,28 @@
 
 use App\Models\Cart;
 
-$carts = Cart::where('user_id', auth()->user()->id)->get();
+if(auth()->user()){
+    $carts = Cart::where('user_id',auth()->user()->id)->get();
+}
+else{
+    $carts = null;
+}
 
 ?>
 <div class="Checkout_section mt-60">
     <div class="container">
         <div class="row">
-
+            @if(session('message'))
+            <div class="alert alert-success">
+                {{session('message')}}
+            </div>
+            @endif
+            @if(Auth::user())
             <div class="checkout_form">
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
-                        <form action="#">
+                        <form action="/order" method="post">
+                            @csrf
                             <h3>Billing Details</h3>
                             <div class="row">
 
@@ -42,7 +53,7 @@ $carts = Cart::where('user_id', auth()->user()->id)->get();
                                 </div>
                                 <div class="payment_method">
                                     <div class="panel-default">
-                                        <input id="payment" name="payment_type" type="radio" value="cod" data-target="createp_account" />
+                                        <input id="payment" name="payment_method" type="radio" value="cod" data-target="createp_account" />
 
                                         <label for="payment" data-toggle="collapse" data-target="#collapseThree" aria-controls="collapseThree">Cash On Delivery</label>
 
@@ -53,7 +64,7 @@ $carts = Cart::where('user_id', auth()->user()->id)->get();
                                         </div>
                                     </div>
                                     <div class="panel-default">
-                                        <input id="payment_defult" name="payment_type" value="khalti" type="radio" data-target="createp_account" />
+                                        <input id="payment_defult" name="payment_method" value="khalti" type="radio" data-target="createp_account" />
                                         <label for="payment_defult" data-toggle="collapse" data-target="#collapseFour" aria-controls="collapseFour">Pay With Khalti <img src="assets/img/icon/papyel.png" alt=""></label>
 
                                         <div id="collapseFour" class="collapse" data-parent="#accordionExample">
@@ -107,6 +118,9 @@ $carts = Cart::where('user_id', auth()->user()->id)->get();
                     </div>
                 </div>
             </div>
+            @else
+            <h3>Please Login</h3>
+            @endif
         </div>
     </div>
     <!--Checkout page section end-->

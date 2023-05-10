@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,10 @@ Route::get('/',[UserController::class,'index']);
 Route::get('/view-product/{id}',[UserController::class,'viewProduct']);
 
 
+Route::get('/pay-with-khalti/{price}/{id}',[OrderController::class,'payWithKhalti']);
+
+
+Route::get('/change-order-status/{id}',[OrderController::class,'changeOrderStatus']);
 
 Auth::routes();
 
@@ -51,3 +56,10 @@ Route::get('/delete-product/{id}',[ProductController::class,'destroy']);
 Route::post('/add-to-cart/{id}',[CartController::class,'addToCart']);
 // checkout
 Route::get('/checkout',[CartController::class,'checkout']);
+// order 
+Route::post('/order',[OrderController::class,'store']);
+
+Route::get('/orders',[AdminController::class,'orders']);
+
+
+
